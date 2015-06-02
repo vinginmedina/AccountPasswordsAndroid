@@ -20,6 +20,7 @@ import android.util.Log;
 import com.ving.accountpasswords.MyApplication;
 
 public class ReadPasswordData extends AsyncTask<MyApplication, Integer, MyApplication> {
+	private MainActivity mainAct;
 	private Context mContext;
 	private ProgressDialog pd = null;
 	private String errorMsg = null;
@@ -29,12 +30,19 @@ public class ReadPasswordData extends AsyncTask<MyApplication, Integer, MyApplic
 	InputStreamReader ipsr = null;
 	BufferedReader br = null;
 	
-	ReadPasswordData(Context context) {
+	ReadPasswordData(MainActivity act, Context context) {
+		mainAct = act;
 		mContext = context;
 	}
 	
 	protected void onPreExecute() {
-	    pd = ProgressDialog.show(mContext, "Reading", "Getting Password Data");
+	    pd = new ProgressDialog(mContext);
+	    pd.setIndeterminate(true);
+	    pd.setIndeterminateDrawable(mainAct.getResources().getDrawable(R.drawable.progress_dialog_anim));
+	    pd.setCancelable(false);
+	    pd.setTitle("Reading");
+	    pd.setMessage("Reading Password Data");
+	    pd.show();
 	}
 	
 	protected MyApplication doInBackground(MyApplication... myApps) {

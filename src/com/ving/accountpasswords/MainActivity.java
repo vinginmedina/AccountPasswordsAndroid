@@ -33,6 +33,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 public class MainActivity extends Activity implements OnItemClickListener, OnItemLongClickListener {
 	
+	private MainActivity myActivity = null;
 	private MyApplication myApp = null;
 	private Context mContext = null;
 	ListView listView = null;
@@ -43,6 +44,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnIte
 		super.onCreate(savedInstanceState);
 		myApp = (MyApplication) getApplication();
 		setContentView(R.layout.activity_main);
+		myActivity = this;
 		mContext = this;
 		myApp.setUrlVing();
 		myApp.setPostUrlVing();
@@ -54,7 +56,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnIte
         listView.setOnItemClickListener((OnItemClickListener) mContext);
         listView.setOnItemLongClickListener((OnItemLongClickListener) mContext);
         myApp.setExpandAdapter(adapter);
-		ReadKeyFiles readRSATask = new ReadKeyFiles(mContext);
+		ReadKeyFiles readRSATask = new ReadKeyFiles(myActivity, mContext);
 		readRSATask.execute(myApp);
 	}
 	
@@ -67,7 +69,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnIte
 			adapter = new PasswordListAdapter(mContext,android.R.layout.simple_list_item_2,myApp.getExpArray());
 			listView.setAdapter(adapter);
 			myApp.setExpandAdapter(adapter);
-			ReadPasswordData readPWDTask = new ReadPasswordData(mContext);
+			ReadPasswordData readPWDTask = new ReadPasswordData(myActivity, mContext);
 			readPWDTask.execute(myApp);
 			break;
 		case R.id.newBtn:

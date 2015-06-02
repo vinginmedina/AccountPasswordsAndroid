@@ -7,9 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.OptionalDataException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-
 import com.ving.accountpasswords.MyApplication;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -20,13 +18,15 @@ import android.util.Log;
 
 public class ReadKeyFiles extends AsyncTask<MyApplication, Integer, MyApplication> {
 	private Context mContext;
+	private MainActivity mainAct;
 	private ProgressDialog pd = null;
 	private String errorMsg = null;
 	private File dir = null;
 	private File PRIVATE_KEY_FILE;
 	private File PUBLIC_KEY_FILE;
 	
-	ReadKeyFiles(Context context) {
+	ReadKeyFiles(MainActivity act, Context context) {
+		mainAct = act;
 		mContext = context;
 		dir = new File(Environment.getExternalStorageDirectory().toString(),"/RSAKeys");
 		PRIVATE_KEY_FILE = new File(dir,"RSA.private.key");
@@ -34,7 +34,13 @@ public class ReadKeyFiles extends AsyncTask<MyApplication, Integer, MyApplicatio
 	}
 	
 	protected void onPreExecute() {
-	    pd = ProgressDialog.show(mContext, "Reading", "Reading Key Files");
+	    pd = new ProgressDialog(mContext);
+	    pd.setIndeterminate(true);
+	    pd.setIndeterminateDrawable(mainAct.getResources().getDrawable(R.drawable.progress_dialog_anim));
+	    pd.setCancelable(false);
+	    pd.setTitle("Reading");
+	    pd.setMessage("Reading Key Files");
+	    pd.show();
 	}
 	
 	protected MyApplication doInBackground(MyApplication... myApps) {
@@ -128,7 +134,7 @@ public class ReadKeyFiles extends AsyncTask<MyApplication, Integer, MyApplicatio
 	protected void onPostExecute(MyApplication myApp) {
 		pd.cancel();
 		if (! isCancelled()) {
-			ReadPasswordData readPWDTask = new ReadPasswordData(mContext);
+			ReadPasswordData readPWDTask = new ReadPasswordData(mainAct, mContext);
 			readPWDTask.execute(myApp);
 		}
 	}

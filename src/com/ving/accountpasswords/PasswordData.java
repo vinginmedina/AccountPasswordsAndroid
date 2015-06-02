@@ -17,8 +17,16 @@ public class PasswordData implements Comparable<PasswordData> {
 		try {
 			String[] fields = input.split("\\|");
 			account = fields[0];
-			userId = fields[1];
-			password = fields[2];
+			if (fields.length < 2) {
+				userId = "";
+			} else {
+				userId = fields[1];
+			}
+			if (fields.length < 3) {
+				password = "";
+			} else {
+				password = fields[2];
+			}
 		} catch (PatternSyntaxException ex) {
 			account = "";
 			userId = "";

@@ -54,11 +54,13 @@ public class MyApplication extends Application {
 	/**
 	 * URL of the encrypted password file, if it isn't available locally
 	 */
-	public static final String fileURLVing = "http://ving.is-a-geek.net:8888/Data/AccountPasswords.crypt";
-	public static final String fileURLEricsson = "http://www.tnds.telcordia.com/~wam/AccountPasswords.crypt";
+	public static final String fileURLVing = "fill in URL";
+	public static final String fileURLEricsson = "fill in URL";
+	public static final String fileURLLuci = "fill in URL";
 	public static String urlToUse = "";
-	public static final String postURLVing = "http://ving.is-a-geek.net:8888/postFile.php";
-	public static final String postURLEricsson = "http://www.tnds.telcordia.com/cgi-bin/postWamFile";
+	public static final String postURLVing = "fill in URL";
+	public static final String postURLEricsson = "fill in URL";
+	public static final String postURLLuci = "fill in URL";
 	public static String urlToPost = "";
 	
 	/**
@@ -96,12 +98,20 @@ public class MyApplication extends Application {
 		urlToUse = fileURLVing;
 	}
 	
+	public void setUrlLuci() {
+		urlToUse = fileURLLuci;
+	}
+	
 	public void setUrlEricsson() {
 		urlToUse = fileURLEricsson;
 	}
 	
 	public void setPostUrlVing() {
 		urlToPost = postURLVing;
+	}
+	
+	public void setPostUrlLuci() {
+		urlToPost = postURLLuci;
 	}
 	
 	public void setPostUrlEricsson() {
